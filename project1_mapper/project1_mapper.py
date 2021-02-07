@@ -42,7 +42,7 @@ class PriorityQueue:
         node = self.queue.pop(0)
         return node[0]
 
-    def empty(self):
+    def isEmpty(self):
         return len(self.queue) == 0
 
 
