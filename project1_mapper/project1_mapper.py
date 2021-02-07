@@ -218,6 +218,40 @@ def breadth_first_search(graph, origin, destination):
      destination is found.
     '''
     print("Breadth First Search")
+    originNodeId = origin[0]
+    destinationNodeId = destination[0]
+
+    # Add items to frontier as a tuple in the form (addedByNodeId, NodeThatWasAddedId)
+    frontier = Queue()
+    explored = []
+
+    # Let the origin add itself to the frontier
+    frontier.put((originNodeId, originNodeId))
+
+    isExploring = True
+    hasFoundDestination = False
+    while isExploring:
+        # If there are no more nodes on the frontier, stop exploring
+        if len(frontier) == 0:
+            isExploring = False
+            break
+        # Get the next node on the frontier, and let it be the current node
+        currentNodeId = frontier.get()[1]
+        # Add its neighbors to the frontier as necessary
+        for connectedNodeId in graph.neighbors(currentNodeId):
+            # Do not add to the frontier if already in frontier or already explored
+            if (currentNodeId, connectedNodeId) not in frontier and connectedNodeId not in explored:
+                # Determine if this node's id is the destination node's id
+                if currentNodeId == destinationNodeId:
+                    hasFoundDestination = True
+                    isExploring = False
+                    break
+                # If the node is not the desination node
+                # just add it to the frontier
+                frontier.put((currentNodeId, connectedNodeId))
+        explored.append(currentNodeId)
+    print("Is Exploring: " + str(isExploring))
+    print("Has found destination: " + str(hasFoundDestination))
 
 
 def uninformed_search(graph, origin, destination):
