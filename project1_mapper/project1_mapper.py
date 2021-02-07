@@ -16,6 +16,35 @@ fig, ax = ox.plot_graph(G, edge_linewidth=3,
                         node_size=0, show=False, close=False)
 plt.show()
 
+# Class provided by Dr. Brian Bennett
+# CSCI-5260-940, lab 2, search_examples.py
+
+
+class PriorityQueue:
+    def __init__(self):
+        self.queue = []
+
+    def set_priority(self, item, priority):
+        for node in self.queue:
+            if node[0] == item:
+                self.queue.remove(node)
+                break
+        self.put(item, priority)
+
+    def put(self, item, priority):
+        node = [item, priority]
+        self.queue.append(node)
+        self.queue.sort(key=itemgetter(1))
+
+    def get(self):
+        if len(self.queue) == 0:
+            return None
+        node = self.queue.pop(0)
+        return node[0]
+
+    def empty(self):
+        return len(self.queue) == 0
+
 
 def node_list_to_path(gr, node_list):
     """
