@@ -46,6 +46,34 @@ class PriorityQueue:
         return len(self.queue) == 0
 
 
+class Queue:
+    def __init__(self):
+        self.queue = collections.deque()
+
+    def put(self, item):
+        self.queue.appendleft(item)
+
+    def get(self):
+        return self.queue.pop()
+
+    def isEmpty(self):
+        return len(self.queue) == 0
+
+
+class Stack:
+    def __init__(self):
+        self.stack = collections.deque()
+
+    def put(self, item):
+        self.stack.append(item)
+
+    def get(self):
+        return self.stack.pop()
+
+    def isEmpty(self):
+        return len(self.stack) == 0
+
+
 def node_list_to_path(gr, node_list):
     """
     SOURCE: Modified from Priyam, Apurv (2020). https://towardsdatascience.com/find-and-plot-your-optimal-path-using-plotly-and-networkx-in-python-17e75387b873
