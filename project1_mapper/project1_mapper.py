@@ -1,17 +1,19 @@
+import matplotlib.pyplot as plt
+import numpy as np
+import collections
+import plotly.graph_objects as go
+from osmnx import distance as distance
 import networkx as nx
 import osmnx as ox
-from osmnx import distance as distance
-import plotly.graph_objects as go
-import collections
-import numpy as np
-import matplotlib.pyplot as plt
 
 ox.config(log_console=True, use_cache=True)
 
-G = ox.graph_from_address('1600 Pennsylvania Avenue, Washington, DC, USA', dist=3000, network_type='drive')
+G = ox.graph_from_address(
+    '1276 Gilbreath Drive, Johnson City, TN, US', dist=4000, network_type='drive')
 
-### Use this code to display a plot of the graph if desired. Note: You need to import matplotlib.pyplot as plt
-fig, ax = ox.plot_graph(G, edge_linewidth=3, node_size=0, show=False, close=False)
+# Use this code to display a plot of the graph if desired. Note: You need to import matplotlib.pyplot as plt
+fig, ax = ox.plot_graph(G, edge_linewidth=3,
+                        node_size=0, show=False, close=False)
 plt.show()
 
 
@@ -131,7 +133,6 @@ def backtrack(graph, origin, node, explored):
     print("Backtracking")
 
 
-
 def depth_first_search(graph, origin, destination):
     '''
     Accepts the graph and the origin and destination points
@@ -151,33 +152,38 @@ def breadth_first_search(graph, origin, destination):
 
 
 def uninformed_search(graph, origin, destination):
-        '''
-        Accepts the graph and the origin and destination points
-        Returns the result of backtracking through the explored list when the
-         destination is found.
-        '''
-        print("My Uninformed Search Algorithm")
+    '''
+    Accepts the graph and the origin and destination points
+    Returns the result of backtracking through the explored list when the
+     destination is found.
+    '''
+    print("My Uninformed Search Algorithm")
 
 
-## -- Set up Destination Point
-destination_point = (38.889730, -77.005928) # The U.S. Capitol
-origin_point = (38.890219, -77.049560) # The Lincoln Memorial
+# -- Set up Origin Point
+origin_point = (36.30321114344463, -83.36710826765649)  # ETSU
 origin = ox.get_nearest_node(G, origin_point)
-destination = ox.get_nearest_node(G, destination_point)
 origin_node = (origin, G.nodes[origin])
+
+# -- Set up Destination Point
+destination_point = (36.3089548, -82.4060683)  # JC Walmart
+destination = ox.get_nearest_node(G, destination_point)
 destination_node = (destination, G.nodes[destination])
+
 bfs_distance = 0
 dfs_distance = 0
 lat = []
 long = []
 
-# bfs_route, lat, long, bfs_distance = breadth_first_search(G, origin_node, destination_node)
-# route_path = node_list_to_path(G, bfs_route)
-# plot_path(lat, long, origin_node, destination_node)
+bfs_route, lat, long, bfs_distance = breadth_first_search(
+    G, origin_node, destination_node)
+route_path = node_list_to_path(G, bfs_route)
+plot_path(lat, long, origin_node, destination_node)
 
 # dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
 # route_path = node_list_to_path(G, dfs_route)
-plot_path(lat, long, origin_node, destination_node) # Until filled in with values, this doesn't do much.
+# Until filled in with values, this doesn't do much.
+plot_path(lat, long, origin_node, destination_node)
 
 print("Total Route Distance (BFS):", bfs_distance)
 print("Total Route Distance (DFS):", dfs_distance)
