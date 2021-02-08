@@ -24,6 +24,12 @@ class PriorityQueue:
     def __init__(self):
         self.queue = []
 
+    def __len__(self):
+        return len(self.queue)
+
+    def __iter__(self):
+        return self.queue.__iter__()
+
     def set_priority(self, item, priority):
         for node in self.queue:
             if node[0] == item:
