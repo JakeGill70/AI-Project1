@@ -333,12 +333,12 @@ def uninformed_search(graph, origin, destination):
 
 
 # -- Set up Origin Point
-origin_point = (36.30321114344463, -83.36710826765649)  # ETSU
+origin_point = (36.30321114344463, -82.36710826765649)  # ETSU
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
 
 # -- Set up Destination Point
-destination_point = (36.3089548, -82.4060683)  # JC Walmart
+destination_point = (36.30898078884839, -82.40344399166412)  # JC Walmart
 destination = ox.get_nearest_node(G, destination_point)
 destination_node = (destination, G.nodes[destination])
 
