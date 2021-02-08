@@ -221,10 +221,12 @@ def metrics(graph, path):
     return (path, lat, long, totalDistance)
 
 
-def backtrack(graph, origin, desination, explored):
+def backtrack(graph, destinationNodeId, exploredDictionary):
     '''
-    Accepts the graph, the origin and the node reached. Also accepts the list of
-    explored/visited locations.
+    Accepts the graph, the destination node's ID, and a dictionary of the 
+    explored nodes in the format (nodeId, nodeId), where the key is a given
+    explored node, and the value is the node which added it to the explored
+    dictionary.
 
     It should work backwards to the origin from node, using explored, so you
     know exactly which path you took to locate the destination.
@@ -235,6 +237,16 @@ def backtrack(graph, origin, desination, explored):
     path cost (i.e., distance).
     '''
     print("Backtracking")
+    # Start assembling the path back to the origin, starting with the destination
+    path = [destinationNodeId]
+    previous = exploredDictionary[destinationNodeId]
+    # Walk through the dictionary, building up the path in reverse order
+    while previous != None:
+        path.append(previous)
+        previous = exploredDictionary.get(previous)
+    # Reverse the already reversed path, putting it in proper sequential order
+    path.reverse()
+    return path
 
 
 def depth_first_search(graph, origin, destination):
@@ -264,10 +276,14 @@ def breadth_first_search(graph, origin, destination):
     # Let the origin add itself to the frontier
     frontier.put(originNodeId)
 
+    # Set up some flags to assist twith the search
     isExploring = True
     hasFoundDestination = False
+    # Declare a variable to be used below that represents the current node being
+    # explored - taken from the frontier.
     currentNodeId = None
 
+    # Start exploring the environment be walking through the nodes along the frontier
     while isExploring:
         # If there are no more nodes on the frontier, stop exploring
         if len(frontier) == 0:
@@ -295,15 +311,9 @@ def breadth_first_search(graph, origin, destination):
                     isExploring = False
                     break
 
-    # Start assembling the path back to the origin, starting with the destination
-    path = [destinationNodeId]
-    previous = pathDictionary[destinationNodeId]
-    # Walk through the dictionary, building up the path in reverse order
-    while previous != None:
-        path.append(previous)
-        previous = pathDictionary.get(previous)
-    # Reverse the already reversed path, putting it in proper sequential order
-    path.reverse()
+    # Work back through the path dictionary to determine the path from the origin
+    # to the destination, getting a list of nodeId's back
+    path = backtrack(graph, destinationNodeId, pathDictionary)
 
     # TODO: Delete the print()'s, they were only used for debugging
     print("Origin: " + str(originNodeId))
