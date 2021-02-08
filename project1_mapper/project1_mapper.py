@@ -6,6 +6,7 @@ from osmnx import distance as distance
 import networkx as nx
 import osmnx as ox
 from operator import itemgetter
+import time
 
 ox.config(log_console=True, use_cache=True)
 
@@ -417,8 +418,20 @@ def uninformed_search(graph, origin, destination):
     # explored - taken from the frontier.
     currentNodeId = None
 
+    # Timer used to print out "..." every 3 seconds
+    # Used to improve UX during processing
+    nextPrintTime = time.time() + 3
+
     # Start exploring the environment be walking through the nodes along the frontier
     while isExploring:
+
+        # Timer used to print out "..." every 3 seconds
+        # Used to improve UX during processing
+        if(time.time() > nextPrintTime):
+            percentComplete = len(explored)/(len(frontier) + len(explored))
+            print("...", "{00:.2%}".format(percentComplete))
+            nextPrintTime = time.time() + 3
+
         # If there are no more nodes on the frontier, stop exploring
         if len(frontier) == 0:
             isExploring = False
