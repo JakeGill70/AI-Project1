@@ -398,7 +398,71 @@ def uninformed_search(graph, origin, destination):
     Returns the result of backtracking through the explored list when the
      destination is found.
     '''
-    print("My Uninformed Search Algorithm")
+    print("Uniform Cost Search")
+    originNodeId = origin[0]
+    destinationNodeId = destination[0]
+
+    # Add items to frontier as a tuple in the form (addedByNodeId, NodeThatWasAddedId)
+    frontier = PriorityQueue()
+    explored = []
+    pathDictionary = {}
+
+    # Let the origin add itself to the frontier
+    frontier.put((originNodeId, 0), 0)
+
+    # Set up some flags to assist twith the search
+    isExploring = True
+    hasFoundDestination = False
+    # Declare a variable to be used below that represents the current node being
+    # explored - taken from the frontier.
+    currentNodeId = None
+
+    # Start exploring the environment be walking through the nodes along the frontier
+    while isExploring:
+        # If there are no more nodes on the frontier, stop exploring
+        if len(frontier) == 0:
+            isExploring = False
+            break
+        # Get the next node on the frontier, and let it be the current node
+        previousNodeId = currentNodeId
+        currentNode = frontier.get()
+        currentNodeId = currentNode[0]
+        currentNodeDist = currentNode[1]
+
+        # Add the current node to the list of explored nodes
+        explored.append(currentNodeId)
+
+        # Add its neighbors to the frontier as necessary
+        for connectedNodeId in graph.neighbors(currentNodeId):
+            # Make a simplified version of the frontier that does not include the distance
+            # ie, a list of Id's instead of a list of tuples in the form (id, dist)
+            nodesInFrontier = [item[0] for item in frontier]
+
+            # Do not add to the frontier if already in frontier or already explored
+            if connectedNodeId not in nodesInFrontier and connectedNodeId not in explored:
+                # Keep a running total of the distance travelled up to this point
+                distance = currentNodeDist + \
+                    getDistance(graph, currentNodeId, connectedNodeId)
+                frontier.put((connectedNodeId, distance), distance)
+                # Add the current node to the pathDictionary, noting which node added
+                pathDictionary[connectedNodeId] = currentNodeId
+
+                # Determine if this node's id is the destination node's id
+                if connectedNodeId == destinationNodeId:
+                    hasFoundDestination = True
+                    isExploring = False
+                    break
+
+    # Work back through the path dictionary to determine the path from the origin
+    # to the destination, getting a list of nodeId's back
+    path = backtrack(graph, destinationNodeId, pathDictionary)
+
+    # TODO: Delete the print()'s, they were only used for debugging
+    print("Origin: " + str(originNodeId))
+    print("Destination: " + str(destinationNodeId))
+    print("Path: " + str(path))
+
+    return metrics(graph,  path)
 
 
 # -- Set up Origin Point
@@ -426,8 +490,14 @@ dfs_route, lat, long, dfs_distance = depth_first_search(
 route_path = node_list_to_path(G, dfs_route)
 plot_path(lat, long, origin_node, destination_node)
 
+ucs_route, lat, long, ucs_distance = uninformed_search(
+    G, origin_node, destination_node)
+route_path = node_list_to_path(G, ucs_route)
+plot_path(lat, long, origin_node, destination_node)
+
 print("Total Route Distance (BFS):", bfs_distance)
 print("Total Route Distance (DFS):", dfs_distance)
+print("Uniform Cost Search Distance (UCS):", ucs_distance)
 
 
 # The following is example code to save your map to an HTML file.
