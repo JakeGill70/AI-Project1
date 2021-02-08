@@ -186,7 +186,42 @@ def plot_path(lat, long, origin_point, destination_point):
     fig.show()
 
 
-def backtrack(graph, origin, node, explored):
+def metrics(graph, path):
+    '''
+    Accepts a graph and a list of node Id's that represent a path
+    between two nodes.
+
+    It walks through each node along the path to determine each
+    node's id/lat/long/distance to next node.
+
+    This method returns a tuple in the following format:
+        (id[], lat[], long[], totalDist)
+    Where the id[] is a list of ids along the path,
+    lat[] is the latitude of each node along the path,
+    long[] is the longitude of each node along the path,
+    and totalDist is the path cost, aka total distance,
+    traveled along the path.
+    '''
+    print("Calculating path metrics")
+    lat = []
+    long = []
+
+    print("Nodes: ")
+    for nodeId in path:
+        node = graph.nodes[nodeId]
+        lat.append(node["y"])
+        long.append(node["x"])
+
+    totalDistance = 0
+    for i in range(len(path)-1):
+        localDistance = ox.distance.euclidean_dist_vec(
+            lat[i], long[i], lat[i+1], long[i+1])
+        totalDistance += localDistance
+
+    return (path, lat, long, totalDistance)
+
+
+def backtrack(graph, origin, desination, explored):
     '''
     Accepts the graph, the origin and the node reached. Also accepts the list of
     explored/visited locations.
@@ -224,34 +259,58 @@ def breadth_first_search(graph, origin, destination):
     # Add items to frontier as a tuple in the form (addedByNodeId, NodeThatWasAddedId)
     frontier = Queue()
     explored = []
+    pathDictionary = {}
 
     # Let the origin add itself to the frontier
-    frontier.put((originNodeId, originNodeId))
+    frontier.put(originNodeId)
 
     isExploring = True
     hasFoundDestination = False
+    currentNodeId = None
+
     while isExploring:
         # If there are no more nodes on the frontier, stop exploring
         if len(frontier) == 0:
             isExploring = False
             break
         # Get the next node on the frontier, and let it be the current node
-        currentNodeId = frontier.get()[1]
+        previousNodeId = currentNodeId
+        currentNodeId = frontier.get()
+
+        # Add the current node to the list of explored nodes
+        explored.append(currentNodeId)
+
         # Add its neighbors to the frontier as necessary
         for connectedNodeId in graph.neighbors(currentNodeId):
             # Do not add to the frontier if already in frontier or already explored
-            if (currentNodeId, connectedNodeId) not in frontier and connectedNodeId not in explored:
+            if connectedNodeId not in frontier and connectedNodeId not in explored:
+                # just add it to the frontier
+                frontier.put(connectedNodeId)
+                # Add the current node to the pathDictionary, noting which node added
+                pathDictionary[connectedNodeId] = currentNodeId
+
                 # Determine if this node's id is the destination node's id
-                if currentNodeId == destinationNodeId:
+                if connectedNodeId == destinationNodeId:
                     hasFoundDestination = True
                     isExploring = False
                     break
-                # If the node is not the desination node
-                # just add it to the frontier
-                frontier.put((currentNodeId, connectedNodeId))
-        explored.append(currentNodeId)
-    print("Is Exploring: " + str(isExploring))
-    print("Has found destination: " + str(hasFoundDestination))
+
+    # Start assembling the path back to the origin, starting with the destination
+    path = [destinationNodeId]
+    previous = pathDictionary[destinationNodeId]
+    # Walk through the dictionary, building up the path in reverse order
+    while previous != None:
+        path.append(previous)
+        previous = pathDictionary.get(previous)
+    # Reverse the already reversed path, putting it in proper sequential order
+    path.reverse()
+
+    # TODO: Delete the print()'s, they were only used for debugging
+    print("Origin: " + str(originNodeId))
+    print("Destination: " + str(destinationNodeId))
+    print("Path: " + str(path))
+
+    return metrics(graph,  path)
 
 
 def uninformed_search(graph, origin, destination):
