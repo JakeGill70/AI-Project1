@@ -220,11 +220,17 @@ def metrics(graph, path):
 
     totalDistance = 0
     for i in range(len(path)-1):
-        localDistance = ox.distance.euclidean_dist_vec(
-            lat[i], long[i], lat[i+1], long[i+1])
+        localDistance = getDistance(graph, path[i], path[i+1])
         totalDistance += localDistance
 
     return (path, lat, long, totalDistance)
+
+
+def getDistance(graph, nodeAId, nodeBId):
+    nodeA = graph.nodes[NodeAId]
+    nodeB = graph.nodes[NodeBId]
+    radiusOfEarth_miles = 3963.1906
+    return ox.distance.great_circle_vec(nodeA["x"], nodeA["y"], nodeB["x"], nodeB["y"], radiusOfEarth_miles)
 
 
 def backtrack(graph, destinationNodeId, exploredDictionary):
