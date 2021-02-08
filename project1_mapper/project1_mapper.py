@@ -5,6 +5,7 @@ import plotly.graph_objects as go
 from osmnx import distance as distance
 import networkx as nx
 import osmnx as ox
+from operator import itemgetter
 
 ox.config(log_console=True, use_cache=True)
 
@@ -227,8 +228,8 @@ def metrics(graph, path):
 
 
 def getDistance(graph, nodeAId, nodeBId):
-    nodeA = graph.nodes[NodeAId]
-    nodeB = graph.nodes[NodeBId]
+    nodeA = graph.nodes[nodeAId]
+    nodeB = graph.nodes[nodeBId]
     radiusOfEarth_miles = 3963.1906
     return ox.distance.great_circle_vec(nodeA["x"], nodeA["y"], nodeB["x"], nodeB["y"], radiusOfEarth_miles)
 
