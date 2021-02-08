@@ -256,6 +256,62 @@ def depth_first_search(graph, origin, destination):
      destination is found.
     '''
     print("Depth First Search")
+    originNodeId = origin[0]
+    destinationNodeId = destination[0]
+
+    # Add items to frontier as a tuple in the form (addedByNodeId, NodeThatWasAddedId)
+    frontier = Stack()
+    explored = []
+    pathDictionary = {}
+
+    # Let the origin add itself to the frontier
+    frontier.put(originNodeId)
+
+    # Set up some flags to assist twith the search
+    isExploring = True
+    hasFoundDestination = False
+    # Declare a variable to be used below that represents the current node being
+    # explored - taken from the frontier.
+    currentNodeId = None
+
+    # Start exploring the environment be walking through the nodes along the frontier
+    while isExploring:
+        # If there are no more nodes on the frontier, stop exploring
+        if len(frontier) == 0:
+            isExploring = False
+            break
+        # Get the next node on the frontier, and let it be the current node
+        previousNodeId = currentNodeId
+        currentNodeId = frontier.get()
+
+        # Add the current node to the list of explored nodes
+        explored.append(currentNodeId)
+
+        # Add its neighbors to the frontier as necessary
+        for connectedNodeId in graph.neighbors(currentNodeId):
+            # Do not add to the frontier if already in frontier or already explored
+            if connectedNodeId not in frontier and connectedNodeId not in explored:
+                # just add it to the frontier
+                frontier.put(connectedNodeId)
+                # Add the current node to the pathDictionary, noting which node added
+                pathDictionary[connectedNodeId] = currentNodeId
+
+                # Determine if this node's id is the destination node's id
+                if connectedNodeId == destinationNodeId:
+                    hasFoundDestination = True
+                    isExploring = False
+                    break
+
+    # Work back through the path dictionary to determine the path from the origin
+    # to the destination, getting a list of nodeId's back
+    path = backtrack(graph, destinationNodeId, pathDictionary)
+
+    # TODO: Delete the print()'s, they were only used for debugging
+    print("Origin: " + str(originNodeId))
+    print("Destination: " + str(destinationNodeId))
+    print("Path: " + str(path))
+
+    return metrics(graph,  path)
 
 
 def breadth_first_search(graph, origin, destination):
@@ -352,9 +408,9 @@ bfs_route, lat, long, bfs_distance = breadth_first_search(
 route_path = node_list_to_path(G, bfs_route)
 plot_path(lat, long, origin_node, destination_node)
 
-# dfs_route, lat, long, dfs_distance = depth_first_search(G, origin_node, destination_node)
-# route_path = node_list_to_path(G, dfs_route)
-# Until filled in with values, this doesn't do much.
+dfs_route, lat, long, dfs_distance = depth_first_search(
+    G, origin_node, destination_node)
+route_path = node_list_to_path(G, dfs_route)
 plot_path(lat, long, origin_node, destination_node)
 
 print("Total Route Distance (BFS):", bfs_distance)
