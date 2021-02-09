@@ -493,24 +493,34 @@ dfs_distance = 0
 lat = []
 long = []
 
+startTime = time.time()
 bfs_route, lat, long, bfs_distance = breadth_first_search(
     G, origin_node, destination_node)
 route_path = node_list_to_path(G, bfs_route)
 plot_path(lat, long, origin_node, destination_node)
+bfs_runTime = time.time() - startTime
 
+startTime = time.time()
 dfs_route, lat, long, dfs_distance = depth_first_search(
     G, origin_node, destination_node)
 route_path = node_list_to_path(G, dfs_route)
 plot_path(lat, long, origin_node, destination_node)
+dfs_runTime = time.time() - startTime
 
+startTime = time.time()
 ucs_route, lat, long, ucs_distance = uninformed_search(
     G, origin_node, destination_node)
 route_path = node_list_to_path(G, ucs_route)
 plot_path(lat, long, origin_node, destination_node)
+ucs_runTime = time.time() - startTime
 
 print("Total Route Distance (BFS):", bfs_distance)
 print("Total Route Distance (DFS):", dfs_distance)
-print("Uniform Cost Search Distance (UCS):", ucs_distance)
+print("Total Route Distance (UCS):", ucs_distance)
+print("")
+print("Total Run Time (BFS):", "{0:.3f}seconds".format(bfs_runTime))
+print("Total Run Time (DFS):", "{0:.3f}seconds".format(dfs_runTime))
+print("Total Run Time (UCS):", "{0:.3f}seconds".format(ucs_runTime))
 
 
 # The following is example code to save your map to an HTML file.
