@@ -274,6 +274,7 @@ class Field:
             The Depth-First Search Algorithm
         '''
         print("Depth-First Search")
+        startTime = time.time()
         frontier = Stack()
         explored = []
         came_from = {}
@@ -319,6 +320,8 @@ class Field:
 
         self.backtrack(came_from, self.end)
 
+        return self.metrics(startTime, explored, self.path)
+
     def metrics(self, startTime, explored, path):
         # Calculate the run time
         runTime = time.time() - startTime
@@ -337,6 +340,7 @@ class Field:
             The Breadth-First Search Algorithm
         '''
         print("Breadth-First Search")
+        startTime = time.time()
         frontier = Queue()
         explored = []
         came_from = {}
@@ -382,6 +386,8 @@ class Field:
 
         self.backtrack(came_from, self.end)
 
+        return self.metrics(startTime, explored, self.path)
+
     def best_first_search(self):
         '''
            The Best-First Search Algorithm
@@ -390,6 +396,7 @@ class Field:
              algorithm locates the end point
         '''
         print("Best-First Search")
+        startTime = time.time()
         frontier = PriorityQueue()
         explored = []
         came_from = {}
@@ -438,6 +445,8 @@ class Field:
 
         self.backtrack(came_from, self.end)
 
+        return self.metrics(startTime, explored, self.path)
+
     def astar_search(self):
         '''
            The A* Search Algorithm
@@ -446,6 +455,7 @@ class Field:
              algorithm locates the end point
         '''
         print("A* Search")
+        startTime = time.time()
         # Items in the priority queue should be a tuple in the format (Point, Score)
         # where score is defined as the path cost up to that point plus the heuristic cost.
         frontier = PriorityQueue()
@@ -507,6 +517,8 @@ class Field:
                         break
 
         self.backtrack(came_from, self.end)
+
+        return self.metrics(startTime, explored, self.path)
 
 
 # ==============================================================================
