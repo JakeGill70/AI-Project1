@@ -3,7 +3,7 @@ from collections import deque
 import math
 from operator import itemgetter
 import numpy as np
-
+import time
 
 # Define Colors
 red = color_rgb(255, 0, 0)
@@ -318,6 +318,19 @@ class Field:
                         break
 
         self.backtrack(came_from, self.end)
+
+    def metrics(self, startTime, explored, path):
+        # Calculate the run time
+        runTime = time.time() - startTime
+        # Count the number of steps - ie nodes checked before a path was found
+        steps = len(explored)
+        # Calculate the path cost
+        pathCost = 0
+        for i in range(len(path)-1):
+            pathCost += self.straight_line_distance(
+                path[i], path[i+1])
+        # Return these stats
+        return f"(Run Time: {round(runTime, 3)}, Path Cost: {round(pathCost, 3)}, Steps: {round(steps, 3)})"
 
     def breadth_first_search(self):
         '''
