@@ -262,6 +262,19 @@ class Field:
         self.path.append(parent)
         self.path.reverse()
 
+    def metrics(self, startTime, explored, path):
+        # Calculate the run time
+        runTime = time.time() - startTime
+        # Count the number of steps - ie nodes checked before a path was found
+        steps = len(explored)
+        # Calculate the path cost
+        pathCost = 0
+        for i in range(len(path)-1):
+            pathCost += self.straight_line_distance(
+                path[i], path[i+1])
+        # Return these stats
+        return f"(Run Time: {round(runTime, 3)}, Path Cost: {round(pathCost, 3)}, Steps: {round(steps, 3)})"
+
     def straight_line_distance(self, point1, point2):
         '''
             Returns the straight-line distance between point 1 and point 2
@@ -321,19 +334,6 @@ class Field:
         self.backtrack(came_from, self.end)
 
         return self.metrics(startTime, explored, self.path)
-
-    def metrics(self, startTime, explored, path):
-        # Calculate the run time
-        runTime = time.time() - startTime
-        # Count the number of steps - ie nodes checked before a path was found
-        steps = len(explored)
-        # Calculate the path cost
-        pathCost = 0
-        for i in range(len(path)-1):
-            pathCost += self.straight_line_distance(
-                path[i], path[i+1])
-        # Return these stats
-        return f"(Run Time: {round(runTime, 3)}, Path Cost: {round(pathCost, 3)}, Steps: {round(steps, 3)})"
 
     def breadth_first_search(self):
         '''
