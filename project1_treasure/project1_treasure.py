@@ -407,6 +407,8 @@ class Field:
 
             # Add its neighbors to the frontier as necessary
             for neighbor in self.get_neighbors(currentPoint):
+                # Convert the frontier from a PQ of tuples to a simple list of Points
+                tmpFrontier = [x[0] for x in frontier]
                 # Do not add to the frontier if already in the frontier or already explored
                 if neighbor not in frontier and neighbor not in explored:
                     # Add it to the frontier
