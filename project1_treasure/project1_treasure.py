@@ -378,7 +378,50 @@ class Field:
              algorithm locates the end point
         '''
         print("Best-First Search")
+        frontier = Queue()
+        explored = []
+        came_from = {}
 
+        # Let the origin add itself to the frontier
+        frontier.put(self.start)
+
+        # Set up some flags to assist twith the search
+        isExploring = True
+        hasFoundEnd = False
+
+        # Declare a variable to be used below that represents the current node being
+        # explored - taken from the frontier.
+        currentPoint = None
+
+        # Start exploring the environment be walking through the points along the frontier
+        while isExploring:
+            # If there are no more points on the frontier, stop exploring
+            if len(frontier) == 0:
+                isExploring = False
+                break
+            # Get the next node on the frontier, and let it be the current node
+            previousPoint = currentPoint
+            currentPoint = frontier.get()
+
+            # Add the current node to the list of explored points
+            explored.append(currentPoint)
+
+            # Add its neighbors to the frontier as necessary
+            for neighbor in self.get_neighbors(currentPoint):
+                # Do not add to the frontier if already in the frontier or already explored
+                if neighbor not in frontier and neighbor not in explored:
+                    # Add it to the frontier
+                    frontier.put(neighbor)
+                    # Add the neighbor to the came_from dictionary
+                    came_from[str(neighbor)] = currentPoint
+
+                    # Determine if this point is the end point
+                    if neighbor == self.end:
+                        hasFoundEnd = True
+                        isExploring = False
+                        break
+
+        self.backtrack(came_from, self.end)
 
     def astar_search(self):
         '''
