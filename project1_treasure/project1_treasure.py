@@ -56,7 +56,7 @@ class PriorityQueue:
 ##==============================================================================
 class Queue:
     def __init__(self):
-        self.queue = collections.deque()
+        self.queue = deque()
 
     def __len__(self):
         return len(self.queue)
@@ -76,7 +76,7 @@ class Queue:
 ##==============================================================================
 class Stack:
     def __init__(self):
-        self.stack = collections.deque()
+        self.stack = deque()
 
     def __len__(self):
         return len(self.stack)
