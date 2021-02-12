@@ -274,12 +274,12 @@ class Field:
             The Depth-First Search Algorithm
         '''
         print("Depth-First Search")
-        frontier = PriorityQueue()
+        frontier = Stack()
         explored = []
         came_from = {}
 
         # Let the origin add itself to the frontier
-        frontier.put(self.start, 0)
+        frontier.put(self.start)
 
         # Set up some flags to assist twith the search
         isExploring = True
@@ -307,8 +307,7 @@ class Field:
                 # Do not add to the frontier if already in the frontier or already explored
                 if neighbor not in frontier and neighbor not in explored:
                     # Add it to the frontier
-                    frontier.put(neighbor, self.straight_line_distance(
-                        neighbor, self.end))
+                    frontier.put(neighbor)
                     # Add the neighbor to the came_from dictionary
                     came_from[str(neighbor)] = currentPoint
 
@@ -378,12 +377,12 @@ class Field:
              algorithm locates the end point
         '''
         print("Best-First Search")
-        frontier = Queue()
+        frontier = PriorityQueue()
         explored = []
         came_from = {}
 
         # Let the origin add itself to the frontier
-        frontier.put(self.start)
+        frontier.put(self.start, 0)
 
         # Set up some flags to assist twith the search
         isExploring = True
@@ -411,7 +410,8 @@ class Field:
                 # Do not add to the frontier if already in the frontier or already explored
                 if neighbor not in frontier and neighbor not in explored:
                     # Add it to the frontier
-                    frontier.put(neighbor)
+                    frontier.put(neighbor, self.straight_line_distance(
+                        neighbor, self.end))
                     # Add the neighbor to the came_from dictionary
                     came_from[str(neighbor)] = currentPoint
 
