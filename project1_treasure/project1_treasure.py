@@ -24,6 +24,12 @@ class PriorityQueue:
     def __init__(self):
         self.queue = []
 
+    def __len__(self):
+        return len(self.queue)
+
+    def __iter__(self):
+        return self.queue.__iter__()
+
     def put(self, item, priority):
         '''
             Add the item and sort by priority
@@ -47,6 +53,45 @@ class PriorityQueue:
         '''
         return len(self.queue) == 0
 
+##==============================================================================
+class Queue:
+    def __init__(self):
+        self.queue = collections.deque()
+
+    def __len__(self):
+        return len(self.queue)
+
+    def __iter__(self):
+        return self.queue.__iter__()
+
+    def put(self, item):
+        self.queue.appendleft(item)
+
+    def get(self):
+        return self.queue.pop()
+
+    def isEmpty(self):
+        return len(self.queue) == 0
+
+##==============================================================================
+class Stack:
+    def __init__(self):
+        self.stack = collections.deque()
+
+    def __len__(self):
+        return len(self.stack)
+
+    def __iter__(self):
+        return self.stack.__iter__()
+
+    def put(self, item):
+        self.stack.append(item)
+
+    def get(self):
+        return self.stack.pop()
+
+    def isEmpty(self):
+        return len(self.stack) == 0
 
 
 ##==============================================================================
