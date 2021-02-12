@@ -433,6 +433,67 @@ class Field:
              algorithm locates the end point
         '''
         print("A* Search")
+        # Items in the priority queue should be a tuple in the format (Point, Score)
+        # where score is defined as the path cost up to that point plus the heuristic cost.
+        frontier = PriorityQueue()
+        explored = []
+        came_from = {}
+
+        # Let the origin add itself to the frontier
+        frontier.put((self.start, 0), 0)
+
+        # Set up some flags to assist twith the search
+        isExploring = True
+        hasFoundEnd = False
+
+        # Declare a variable to be used below that represents the current node being
+        # explored - taken from the frontier.
+        currentPoint = None
+
+        # Start exploring the environment be walking through the points along the frontier
+        while isExploring:
+            # If there are no more points on the frontier, stop exploring
+            if len(frontier) == 0:
+                isExploring = False
+                break
+            # Get the next node on the frontier, and let it be the current node
+            previousPoint = currentPoint
+            currentPointTuple = frontier.get()
+            currentPoint = currentPointTuple[0]
+            currentDist = currentPointTuple[1]
+
+            # Add the current node to the list of explored points
+            explored.append(currentPoint)
+
+            # Add its neighbors to the frontier as necessary
+            for neighbor in self.get_neighbors(currentPoint):
+                # Convert the frontier from a PQ of tuples to a simple list of Points
+                tmpFrontier = [x[0][0] for x in frontier]
+                # Do not add to the frontier if already in the frontier or already explored
+                if neighbor not in tmpFrontier and neighbor not in explored:
+                    # Get the distance from this neighboring point to the end point
+                    hueristicDist = self.straight_line_distance(
+                        neighbor, self.end)
+                    # Get the distance from this neighboring point to the current point
+                    neighborDist = self.straight_line_distance(
+                        neighbor, currentPoint)
+                    # Calculate the path distance from the start point up to this neighboring point
+                    pathDist = currentDist + neighborDist
+
+                    # Add the point and the path distance to the frontier
+                    # Use the path distance combined with the heuristic to determine its priority
+                    frontier.put((neighbor, pathDist),
+                                 pathDist + hueristicDist)
+                    # Add the neighbor to the came_from dictionary
+                    came_from[str(neighbor)] = currentPoint
+
+                    # Determine if this point is the end point
+                    if neighbor == self.end:
+                        hasFoundEnd = True
+                        isExploring = False
+                        break
+
+        self.backtrack(came_from, self.end)
 
 
 # ==============================================================================
