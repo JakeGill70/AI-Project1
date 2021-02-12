@@ -320,11 +320,6 @@ def depth_first_search(graph, origin, destination):
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
 
-    # TODO: Delete the print()'s, they were only used for debugging
-    print("Origin: " + str(originNodeId))
-    print("Destination: " + str(destinationNodeId))
-    print("Path: " + str(path))
-
     return metrics(graph,  path)
 
 
@@ -384,11 +379,6 @@ def breadth_first_search(graph, origin, destination):
     # Work back through the path dictionary to determine the path from the origin
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
-
-    # TODO: Delete the print()'s, they were only used for debugging
-    print("Origin: " + str(originNodeId))
-    print("Destination: " + str(destinationNodeId))
-    print("Path: " + str(path))
 
     return metrics(graph,  path)
 
@@ -469,11 +459,6 @@ def uninformed_search(graph, origin, destination):
     # Work back through the path dictionary to determine the path from the origin
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
-
-    # TODO: Delete the print()'s, they were only used for debugging
-    print("Origin: " + str(originNodeId))
-    print("Destination: " + str(destinationNodeId))
-    print("Path: " + str(path))
 
     return metrics(graph,  path)
 
