@@ -476,7 +476,7 @@ class Field:
                 # Convert the frontier from a PQ of tuples to a simple list of Points
                 tmpFrontier = [x[0] for x in frontier]
                 # Do not add to the frontier if already in the frontier or already explored
-                if neighbor not in frontier and neighbor not in explored:
+                if neighbor not in tmpFrontier and neighbor not in explored:
                     # Add it to the frontier
                     frontier.put(neighbor, self.straight_line_distance(
                         neighbor, self.end))
