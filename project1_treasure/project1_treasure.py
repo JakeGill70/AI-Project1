@@ -637,10 +637,6 @@ def setup_logo_map(f):
 def setup_polygon_field(f):
 
     # Add other polygons here
-
-    #p4 = Polygon(Point(30,125),Point(200,225),Point(50,20))
-    # p4.setFill(gray)
-    # f.add_polygon(p4)
     print("My Very Own Polygon Field that I created Myself.")
     p0 = Polygon(Point(392.38318670576734, 92.08993157380255),
                  Point(247.2414467253177, 233.227761485826),
@@ -673,9 +669,65 @@ def setup_polygon_field(f):
                  Point(546.5337243401759, 871.8514173998045),
                  Point(592.5786901270773, 984.9618768328446))
     p2.setOutline("tan")
-    p2.setWidth(2)
+    p2.setWidth(8)
     p2.setFill("green")
     f.add_polygon(p2)
+
+    p3 = Polygon(Point(514.5024437927664, 122.11925708699903),
+                 Point(548.535679374389, 264.258064516129),
+                 Point(605.5913978494624, 227.2218963831867),
+                 Point(604.5904203323558, 134.1309872922776))
+    p3.setOutline("tan")
+    p3.setWidth(8)
+    p3.setFill("green")
+    f.add_polygon(p3)
+
+    p4 = Polygon(Point(356.3479960899316, 753.7360703812317),
+                 Point(482.4711632453568, 831.8123167155425),
+                 Point(362.3538611925709, 970.9481915933529),
+                 Point(274.2678396871945, 849.8299120234605),
+                 Point(107.10459433040079, 970.9481915933529),
+                 Point(160.1564027370479, 845.8260019550343))
+    p4.setOutline("tan")
+    p4.setWidth(2)
+    p4.setFill("green")
+    f.add_polygon(p4)
+
+    p5 = Polygon(Point(169.16520039100683, 403.3939393939394),
+                 Point(158.1544477028348, 566.5532746823069),
+                 Point(5.0, 455.44477028347995),
+                 Point(5.0, 386.37732160312805))
+    p5.setOutline("tan")
+    p5.setWidth(2)
+    p5.setFill("green")
+    f.add_polygon(p5)
+
+    # Make a batch of small islands in the main harbor area
+    microIslands = [Point(460.4496578690127, 525.5131964809384),
+                    Point(471.46041055718473, 544.5317693059628),
+                    Point(500.4887585532747, 524.5122189638319),
+                    Point(643.6285434995112, 485.47409579667647),
+                    Point(607.5933528836755, 498.4868035190616),
+                    Point(630.6158357771261, 525.5131964809384),
+                    Point(575.5620723362658, 624.6099706744868),
+                    Point(581.5679374389052, 606.592375366569),
+                    Point(565.5522971652003, 599.5855327468231),
+                    Point(533.5210166177908, 679.663734115347),
+                    Point(523.5112414467253, 663.6480938416422),
+                    Point(547.5347018572825, 663.6480938416422),
+                    Point(665.6500488758553, 543.5307917888563),
+                    Point(631.6168132942327, 571.5581622678396),
+                    Point(614.6001955034213, 539.5268817204301),
+                    Point(548.535679374389, 566.5532746823069),
+                    Point(548.535679374389, 555.5425219941349),
+                    Point(530.5180840664711, 562.5493646138807)]
+    for i in range(0, len(microIslands), 3):
+        microIsland = Polygon(
+            microIslands[i], microIslands[i+1], microIslands[i+2])
+        microIsland.setOutline("tan")
+        microIsland.setWidth(4)
+        microIsland.setFill("green")
+        f.add_polygon(microIsland)
 
 
 # ==============================================================================
@@ -703,7 +755,7 @@ def main():
     f.setBackground(etsu_blue)
     setup_polygon_field(f)
     starting_point = Point(100, 100)
-    ending_point = Point(900, 900)
+    ending_point = Point(950, 675)
 
     f.add_start(starting_point)
     f.add_end(ending_point)
