@@ -303,8 +303,20 @@ class Field:
         # explored - taken from the frontier.
         currentPoint = None
 
+        # Timer used to print out percent complete every 3 seconds
+        # Used to improve UX during processing
+        nextPrintTime = time.time() + 3
+
         # Start exploring the environment be walking through the points along the frontier
         while isExploring:
+
+            # Timer used to print out percent complete every 3 seconds
+            # Used to improve UX during processing
+            if(time.time() > nextPrintTime):
+                percentComplete = len(explored)/(len(frontier) + len(explored))
+                print("{00:.2%}".format(percentComplete), " complete")
+                nextPrintTime = time.time() + 3
+
             # If there are no more points on the frontier, stop exploring
             if len(frontier) == 0:
                 isExploring = False
@@ -356,8 +368,20 @@ class Field:
         # explored - taken from the frontier.
         currentPoint = None
 
+        # Timer used to print out percent complete every 3 seconds
+        # Used to improve UX during processing
+        nextPrintTime = time.time() + 3
+
         # Start exploring the environment be walking through the points along the frontier
         while isExploring:
+
+            # Timer used to print out percent complete every 3 seconds
+            # Used to improve UX during processing
+            if(time.time() > nextPrintTime):
+                percentComplete = len(explored)/(len(frontier) + len(explored))
+                print("{00:.2%}".format(percentComplete), " complete")
+                nextPrintTime = time.time() + 3
+
             # If there are no more points on the frontier, stop exploring
             if len(frontier) == 0:
                 isExploring = False
@@ -412,8 +436,20 @@ class Field:
         # explored - taken from the frontier.
         currentPoint = None
 
+        # Timer used to print out percent complete every 3 seconds
+        # Used to improve UX during processing
+        nextPrintTime = time.time() + 3
+
         # Start exploring the environment be walking through the points along the frontier
         while isExploring:
+
+            # Timer used to print out percent complete every 3 seconds
+            # Used to improve UX during processing
+            if(time.time() > nextPrintTime):
+                percentComplete = len(explored)/(len(frontier) + len(explored))
+                print("{00:.2%}".format(percentComplete), " complete")
+                nextPrintTime = time.time() + 3
+
             # If there are no more points on the frontier, stop exploring
             if len(frontier) == 0:
                 isExploring = False
@@ -473,8 +509,20 @@ class Field:
         # explored - taken from the frontier.
         currentPoint = None
 
+        # Timer used to print out percent complete every 3 seconds
+        # Used to improve UX during processing
+        nextPrintTime = time.time() + 3
+
         # Start exploring the environment be walking through the points along the frontier
         while isExploring:
+
+            # Timer used to print out percent complete every 3 seconds
+            # Used to improve UX during processing
+            if(time.time() > nextPrintTime):
+                percentComplete = len(explored)/(len(frontier) + len(explored))
+                print("{00:.2%}".format(percentComplete), " complete")
+                nextPrintTime = time.time() + 3
+
             # If there are no more points on the frontier, stop exploring
             if len(frontier) == 0:
                 isExploring = False
@@ -590,20 +638,20 @@ def setup_polygon_field(f):
 # ==============================================================================
 def main():
     # === Regular Field
-    f = Field(1280, 720, "Bucky's Treasure Hunt")
-    f.setCoords(0, 720, 1280, 0)
-    f.setBackground(etsu_blue)
-    setup_logo_map(f)
-    starting_point = Point(20, 375)
-    ending_point = Point(1200, 700)
+    # f = Field(1280, 720, "Bucky's Treasure Hunt")
+    # f.setCoords(0, 720, 1280, 0)
+    # f.setBackground(etsu_blue)
+    # setup_logo_map(f)
+    # starting_point = Point(20, 375)
+    # ending_point = Point(1200, 700)
 
     # === Game Map Field
-    # f = Field(1024, 1024, "Bucky's Treasure Hunt")
-    # f.setCoords(0, 1024, 1024, 0)
-    # f.setBackground(etsu_blue)
-    # setup_game(f)
-    # starting_point = Point(200,100)
-    # ending_point = Point(400,600)
+    f = Field(1024, 1024, "Bucky's Treasure Hunt")
+    f.setCoords(0, 1024, 1024, 0)
+    f.setBackground(etsu_blue)
+    setup_game_map(f)
+    starting_point = Point(200, 100)
+    ending_point = Point(400, 600)
 
     f.add_start(starting_point)
     f.add_end(ending_point)
