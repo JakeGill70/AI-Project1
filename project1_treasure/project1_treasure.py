@@ -642,6 +642,40 @@ def setup_polygon_field(f):
     # p4.setFill(gray)
     # f.add_polygon(p4)
     print("My Very Own Polygon Field that I created Myself.")
+    p0 = Polygon(Point(392.38318670576734, 92.08993157380255),
+                 Point(247.2414467253177, 233.227761485826),
+                 Point(417.4076246334311, 342.33431085043986),
+                 Point(530.5180840664711, 279.27272727272725),
+                 Point(476.4652981427175, 125.12218963831867))
+    p0.setOutline("tan")
+    p0.setWidth(2)
+    p0.setFill("green")
+    f.add_polygon(p0)
+
+    p1 = Polygon(Point(831.8123167155425, 232.22678396871945),
+                 Point(629.6148582600196, 406.396871945259),
+                 Point(723.7067448680352, 593.5796676441838),
+                 Point(539.5268817204301, 723.7067448680352),
+                 Point(382.37341153470186, 541.5288367546432),
+                 Point(168.1642228739003, 661.6461388074291),
+                 Point(212.20723362658848, 748.7311827956989),
+                 Point(389.3802541544477, 661.6461388074291),
+                 Point(607.5933528836755, 827.8084066471163),
+                 Point(988.9657869012708, 570.5571847507331),
+                 Point(776.7585532746823, 455.44477028347995),
+                 Point(961.939393939394, 330.3225806451613))
+    p1.setOutline("tan")
+    p1.setWidth(2)
+    p1.setFill("green")
+    f.add_polygon(p1)
+
+    p2 = Polygon(Point(483.47214076246337, 989.9667644183774),
+                 Point(546.5337243401759, 871.8514173998045),
+                 Point(592.5786901270773, 984.9618768328446))
+    p2.setOutline("tan")
+    p2.setWidth(2)
+    p2.setFill("green")
+    f.add_polygon(p2)
 
 
 # ==============================================================================
@@ -656,12 +690,20 @@ def main():
     # ending_point = Point(1200, 700)
 
     # === Game Map Field
+    # f = Field(1024, 1024, "Bucky's Treasure Hunt")
+    # f.setCoords(0, 1024, 1024, 0)
+    # f.setBackground(etsu_blue)
+    # setup_game_map(f)
+    # starting_point = Point(200, 100)
+    # ending_point = Point(400, 600)
+
+    # === Custom Game Map Field
     f = Field(1024, 1024, "Bucky's Treasure Hunt")
     f.setCoords(0, 1024, 1024, 0)
     f.setBackground(etsu_blue)
-    setup_game_map(f)
-    starting_point = Point(200, 100)
-    ending_point = Point(400, 600)
+    setup_polygon_field(f)
+    starting_point = Point(100, 100)
+    ending_point = Point(900, 900)
 
     f.add_start(starting_point)
     f.add_end(ending_point)
