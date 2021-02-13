@@ -221,10 +221,10 @@ class Field:
             Collect points whenever a mouse is clicked,
             pressing "q" to stop collecting points.
         '''
-        # while self.win.checkKey() != "q":
-        #     p = self.win.checkMouse()
-        #     if p != None:
-        #         print(f"Point({p.x}, {p.y}), ")
+        while self.win.checkKey() != "q":
+            p = self.win.checkMouse()
+            if p != None:
+                print(f"Point({p.x}, {p.y}), ")
 
     def close(self):
         '''
