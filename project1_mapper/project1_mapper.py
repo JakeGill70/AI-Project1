@@ -547,13 +547,3 @@ for endLocation in destinations:
     print("Total Steps (BFS):", bfs_distance)
     print("Total Steps (DFS):", dfs_distance)
     print("Total Steps (UCS):", ucs_distance)
-
-# The following is example code to save your map to an HTML file.
-# route = nx.shortest_path(G, origin_node, destination_node)
-# route_map = ox.plot_route_folium(G, route)
-# filepath = 'data/graph.html'
-# route_map.save(filepath)
-# print(G.nodes(True))
-# ec = ox.plot.get_edge_colors_by_attr(G, attr='length', cmap='plasma_r')
-# fig, ax = ox.plot_graph(G, node_color='w', node_edgecolor='k', node_size=20,
-#                         edge_color=ec, edge_linewidth=2)
