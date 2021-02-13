@@ -493,45 +493,60 @@ origin_point = (36.30321114344463, -82.36710826765649)  # ETSU
 origin = ox.get_nearest_node(G, origin_point)
 origin_node = (origin, G.nodes[origin])
 
-# -- Set up Destination Point
-destination_point = (36.30898078884839, -82.40344399166412)  # JC Walmart
-destination = ox.get_nearest_node(G, destination_point)
-destination_node = (destination, G.nodes[destination])
+destinations = [
+    ("Walmart", 36.3089548, -82.4060683),
+    ("Target", 36.3426194, -82.3756855),
+    ("Tweetsie Trail", 36.3150095, -82.3386371),
+    ("Frieberg's", 36.3164826, -82.3547546),
+    ("Food City", 36.3018953, -82.3400047),
+    ("Best Buy", 36.3479073, -82.4029607)
+]
 
-bfs_distance = 0
-dfs_distance = 0
-lat = []
-long = []
+for endLocation in destinations:
 
-startTime = time.time()
-bfs_route, lat, long, bfs_distance = breadth_first_search(
-    G, origin_node, destination_node)
-route_path = node_list_to_path(G, bfs_route)
-plot_path(lat, long, origin_node, destination_node)
-bfs_runTime = time.time() - startTime
+    # -- Set up Destination Point
+    destination_point = (endLocation[1], endLocation[2])
+    destination = ox.get_nearest_node(G, destination_point)
+    destination_node = (destination, G.nodes[destination])
 
-startTime = time.time()
-dfs_route, lat, long, dfs_distance = depth_first_search(
-    G, origin_node, destination_node)
-route_path = node_list_to_path(G, dfs_route)
-plot_path(lat, long, origin_node, destination_node)
-dfs_runTime = time.time() - startTime
+    bfs_distance = 0
+    dfs_distance = 0
+    lat = []
+    long = []
 
-startTime = time.time()
-ucs_route, lat, long, ucs_distance = uninformed_search(
-    G, origin_node, destination_node)
-route_path = node_list_to_path(G, ucs_route)
-plot_path(lat, long, origin_node, destination_node)
-ucs_runTime = time.time() - startTime
+    startTime = time.time()
+    bfs_route, lat, long, bfs_distance, bfs_steps = breadth_first_search(
+        G, origin_node, destination_node)
+    route_path = node_list_to_path(G, bfs_route)
+    plot_path(lat, long, origin_node, destination_node)
+    bfs_runTime = time.time() - startTime
 
-print("Total Route Distance (BFS):", bfs_distance)
-print("Total Route Distance (DFS):", dfs_distance)
-print("Total Route Distance (UCS):", ucs_distance)
-print("")
-print("Total Run Time (BFS):", "{0:.3f}seconds".format(bfs_runTime))
-print("Total Run Time (DFS):", "{0:.3f}seconds".format(dfs_runTime))
-print("Total Run Time (UCS):", "{0:.3f}seconds".format(ucs_runTime))
+    startTime = time.time()
+    dfs_route, lat, long, dfs_distance, dfs_steps = depth_first_search(
+        G, origin_node, destination_node)
+    route_path = node_list_to_path(G, dfs_route)
+    plot_path(lat, long, origin_node, destination_node)
+    dfs_runTime = time.time() - startTime
 
+    startTime = time.time()
+    ucs_route, lat, long, ucs_distance, ucs_steps = uninformed_search(
+        G, origin_node, destination_node)
+    route_path = node_list_to_path(G, ucs_route)
+    plot_path(lat, long, origin_node, destination_node)
+    ucs_runTime = time.time() - startTime
+
+    print(endLocation[0])
+    print("Total Route Distance (BFS):", "{0:.3f}miles".format(bfs_distance))
+    print("Total Route Distance (DFS):", "{0:.3f}miles".format(dfs_distance))
+    print("Total Route Distance (UCS):", "{0:.3f}miles".format(ucs_distance))
+    print("")
+    print("Total Run Time (BFS):", "{0:.3f}seconds".format(bfs_runTime))
+    print("Total Run Time (DFS):", "{0:.3f}seconds".format(dfs_runTime))
+    print("Total Run Time (UCS):", "{0:.3f}seconds".format(ucs_runTime))
+    print("")
+    print("Total Steps (BFS):", bfs_distance)
+    print("Total Steps (DFS):", dfs_distance)
+    print("Total Steps (UCS):", ucs_distance)
 
 # The following is example code to save your map to an HTML file.
 # route = nx.shortest_path(G, origin_node, destination_node)
