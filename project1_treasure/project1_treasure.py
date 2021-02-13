@@ -216,6 +216,16 @@ class Field:
         '''
         self.win.getMouse()
 
+    def collectMouseCoordinates(self):
+        '''
+            Collect points whenever a mouse is clicked,
+            pressing "q" to stop collecting points.
+        '''
+        # while self.win.checkKey() != "q":
+        #     p = self.win.checkMouse()
+        #     if p != None:
+        #         print(f"Point({p.x}, {p.y}), ")
+
     def close(self):
         '''
             Closes the Window after a pause
