@@ -194,7 +194,7 @@ def plot_path(lat, long, origin_point, destination_point):
     fig.show()
 
 
-def metrics(graph, path):
+def metrics(graph, path, explored):
     '''
     Accepts a graph and a list of node Id's that represent a path
     between two nodes.
@@ -224,7 +224,9 @@ def metrics(graph, path):
         localDistance = getDistance(graph, path[i], path[i+1])
         totalDistance += localDistance
 
-    return (path, lat, long, totalDistance)
+    steps = len(explored)
+
+    return (path, lat, long, totalDistance, steps)
 
 
 def getDistance(graph, nodeAId, nodeBId):
@@ -331,7 +333,7 @@ def depth_first_search(graph, origin, destination):
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
 
-    return metrics(graph,  path)
+    return metrics(graph, path, explored)
 
 
 def breadth_first_search(graph, origin, destination):
@@ -403,7 +405,7 @@ def breadth_first_search(graph, origin, destination):
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
 
-    return metrics(graph,  path)
+    return metrics(graph, path, explored)
 
 
 def uninformed_search(graph, origin, destination):
@@ -483,7 +485,7 @@ def uninformed_search(graph, origin, destination):
     # to the destination, getting a list of nodeId's back
     path = backtrack(graph, destinationNodeId, pathDictionary)
 
-    return metrics(graph,  path)
+    return metrics(graph, path, explored)
 
 
 # -- Set up Origin Point
