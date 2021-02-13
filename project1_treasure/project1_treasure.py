@@ -729,34 +729,11 @@ def setup_polygon_field(f):
         microIsland.setFill("green")
         f.add_polygon(microIsland)
 
-
 # ==============================================================================
 # ==============================================================================
-def main():
-    # === Regular Field
-    # f = Field(1280, 720, "Bucky's Treasure Hunt")
-    # f.setCoords(0, 720, 1280, 0)
-    # f.setBackground(etsu_blue)
-    # setup_logo_map(f)
-    # starting_point = Point(20, 375)
-    # ending_point = Point(1200, 700)
 
-    # === Game Map Field
-    # f = Field(1024, 1024, "Bucky's Treasure Hunt")
-    # f.setCoords(0, 1024, 1024, 0)
-    # f.setBackground(etsu_blue)
-    # setup_game_map(f)
-    # starting_point = Point(200, 100)
-    # ending_point = Point(400, 600)
 
-    # === Custom Game Map Field
-    f = Field(1024, 1024, "Bucky's Treasure Hunt")
-    f.setCoords(0, 1024, 1024, 0)
-    f.setBackground(etsu_blue)
-    setup_polygon_field(f)
-    starting_point = Point(100, 100)
-    ending_point = Point(950, 675)
-
+def runSearchAlgorithms(f, starting_point, ending_point):
     f.add_start(starting_point)
     f.add_end(ending_point)
 
@@ -774,6 +751,40 @@ def main():
     print("Best-First Search:", f.best_first_search())
 
     f.close()
+
+
+# ==============================================================================
+# ==============================================================================
+def main():
+    # === Regular Field
+    f = Field(1280, 720, "Bucky's Treasure Hunt")
+    f.setCoords(0, 720, 1280, 0)
+    f.setBackground(etsu_blue)
+    setup_logo_map(f)
+    starting_point = Point(20, 375)
+    ending_point = Point(1200, 700)
+    # Perform searches
+    runSearchAlgorithms(f, starting_point, ending_point)
+
+    # === Game Map Field
+    f = Field(1024, 1024, "Bucky's Treasure Hunt")
+    f.setCoords(0, 1024, 1024, 0)
+    f.setBackground(etsu_blue)
+    setup_game_map(f)
+    starting_point = Point(200, 100)
+    ending_point = Point(400, 600)
+    # Perform searches
+    runSearchAlgorithms(f, starting_point, ending_point)
+
+    # === Custom Game Map Field
+    f = Field(1024, 1024, "Bucky's Treasure Hunt")
+    f.setCoords(0, 1024, 1024, 0)
+    f.setBackground(etsu_blue)
+    setup_polygon_field(f)
+    starting_point = Point(100, 100)
+    ending_point = Point(950, 675)
+    # Perform searches
+    runSearchAlgorithms(f, starting_point, ending_point)
 
 
 main()
